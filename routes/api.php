@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UsuarioController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
@@ -35,9 +36,9 @@ Route::get('receta/{id}', [Controller::class, 'receta']);
 Route::get('comentarios/{id}', [Controller::class, 'comentarios']);
 Route::post('nuevoComentario/{id}/{comentario}', [Controller::class, 'nuevoComentario']);
 Route::get('buscador/{categoria}/{ingredientes}/{nutriscore}/{precio}/{favorito}', [Controller::class, 'buscador']);
-Route::get('login/{usuario}/{contraseña}', [Controller::class, 'login']);
+Route::post('login', [UsuarioController::class, 'login']); //hecho
 Route::get('logout', [Controller::class, 'logout']);
-Route::get('registro/{nombre}/{usuario}/{contraseña}', [Controller::class, 'registro']);
+Route::post('registro', [UsuarioController::class, 'registro']); //hecho
 Route::get('addFavoritos/{id}', [Controller::class, 'addFavoritos']);
 Route::get('removeFavoritos/{id}', [Controller::class, 'removeFavoritos']);
 Route::get('ingredientes', [Controller::class, 'ingredientes']);
