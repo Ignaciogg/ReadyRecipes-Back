@@ -13,12 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('recetas', function (Blueprint $table) {
-            $table->id();
-            $table->string('nombre')->nullable();
-            $table->float('precio');
+        Schema::create('comentario', function (Blueprint $table) {
+            $table->increments('id_Comentario');
+            $table->string('contenido');
             $table->timestamps();
             $table->softDeletes();
+            $table->foreignId('id_Receta')->references('id_Receta')->on('receta');
+            $table->foreignId('id_Usuario')->references('id_Usuario')->on('usuario');
         });
     }
 
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('recetas');
+        Schema::dropIfExists('comentario');
     }
 };
