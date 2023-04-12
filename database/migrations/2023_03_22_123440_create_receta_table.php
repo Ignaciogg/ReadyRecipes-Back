@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('receta', function (Blueprint $table) {
-            $table->increments('id_Receta');
+        Schema::create('recetas', function (Blueprint $table) {
+            $table->id();
             $table->string('url')->unique();
             $table->string('titulo');
             $table->string('texto');
@@ -37,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('receta');
+        Schema::dropIfExists('recetas');
     }
 };

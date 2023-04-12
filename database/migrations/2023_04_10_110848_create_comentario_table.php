@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('comentario', function (Blueprint $table) {
-            $table->increments('id_Comentario');
+        Schema::create('comentarios', function (Blueprint $table) {
+            $table->id();
             $table->string('contenido');
             $table->timestamps();
             $table->softDeletes();
-            $table->foreignId('id_Receta')->references('id_Receta')->on('receta');
-            $table->foreignId('id_Usuario')->references('id_Usuario')->on('usuario');
+            $table->foreignId('id_Receta')->references('id')->on('recetas');
+            $table->foreignId('id_Usuario')->references('id')->on('usuarios');
         });
     }
 
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('comentario');
+        Schema::dropIfExists('comentarios');
     }
 };

@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('favorito', function (Blueprint $table) {
-            $table->increments('id_Favorito');
+        Schema::create('favoritos', function (Blueprint $table) {
+            $table->id();
             $table->timestamps();
             $table->softDeletes();
-            $table->foreignId('id_Receta')->references('id_Receta')->on('receta');
-            $table->foreignId('id_Usuario')->references('id_Usuario')->on('usuario');
+            $table->foreignId('id_Receta')->references('id')->on('recetas');
+            $table->foreignId('id_Usuario')->references('id')->on('usuarios');
         });
     }
 
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('favorito');
+        Schema::dropIfExists('favoritos');
     }
 };
