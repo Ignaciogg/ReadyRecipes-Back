@@ -35,35 +35,25 @@ class Controller extends BaseController
         $receta = Receta::find($id);
         return json_encode($receta);
     }
-    
+
     // Recuperar los comentarios de una receta (escritos por nuestros usuarios)
     public function comentarios($id) {
-        
+
     }
 
     // Añadir un comentario a una receta
     public function nuevoComentario($id, $comentario) {
-        
+
     }
 
     // categoria es number, ingredientes es array, nutriscore es number, precio es number, favorito es boolean
     public function buscador($categoria, $ingredientes, $nutriscore, $precio, $favorito) {
-        
-    }
 
-    // Iniciar sesion
-    public function login($usuario, $contraseña) {
-        
     }
 
     // Cerrar sesion
     public function logout() {
-        
-    }
-    
-    // Crear usuario nuevo (hacer comprobacion de que los campos cumplen con los requisitos)
-    public function registro($nombre, $usuario, $contraseña) {
-        
+
     }
 
     // Añadir la receta a favoritos
@@ -73,11 +63,11 @@ class Controller extends BaseController
 
     // Eliminar la receta de favoritos
     public function removeFavoritos($id) {
-        
+
     }
 
     // Obtener lista de todos los ingredientes para el buscador
     public function ingredientes() {
-        
+
     }
 }

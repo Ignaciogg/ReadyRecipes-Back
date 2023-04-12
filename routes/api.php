@@ -38,7 +38,7 @@ Route::post('nuevoComentario/{id}/{comentario}', [Controller::class, 'nuevoComen
 Route::get('buscador/{categoria}/{ingredientes}/{nutriscore}/{precio}/{favorito}', [Controller::class, 'buscador']);
 Route::post('login', [UsuarioController::class, 'login']); //hecho
 Route::get('logout', [Controller::class, 'logout']);
-Route::post('registro', [UsuarioController::class, 'registro']); //hecho
+Route::post('registro', [UsuarioController::class, 'registrar']); //hecho
 Route::get('addFavoritos/{id}', [Controller::class, 'addFavoritos']);
 Route::get('removeFavoritos/{id}', [Controller::class, 'removeFavoritos']);
 Route::get('ingredientes', [Controller::class, 'ingredientes']);

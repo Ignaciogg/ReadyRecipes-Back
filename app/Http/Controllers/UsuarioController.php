@@ -7,8 +7,7 @@ use Illuminate\Http\Request;
 
 class UsuarioController extends Controller
 {
-    public function registrar(Request $request)
-    {
+    public function registrar(Request $request){
         $usuario = new Usuario();
         $usuario->nombre = $request->nombre;
         $usuario->apellidos = $request->apellidos;
@@ -18,8 +17,8 @@ class UsuarioController extends Controller
         $usuario->save();
         return json_encode($usuario);
     }
-    public function login(Request $request)
-    {
+
+    public function login(Request $request){
         $email = $request->email;
         $pass = $request->pass;
 
