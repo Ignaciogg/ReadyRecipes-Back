@@ -30,4 +30,22 @@ class RecetaController extends Controller
         $receta->delete();
         return json_encode($receta);
     }
+
+    //NUEVAS FUNCIONES
+
+    public function comentarios($id) {
+        $receta = Receta::find($id);
+        $comentarios = $receta->comentarios;
+        return json_encode($comentarios);
+    }
+
+    public function nuevoComentario($id, $comentario) {
+        $receta = Receta::find($id);
+        $receta->comentarios()->create([
+            'Comentario' => $comentario
+        ]);
+        return json_encode($receta);
+    }
+
+    
 }

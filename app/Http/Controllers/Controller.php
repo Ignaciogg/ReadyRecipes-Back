@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Receta;
+use App\Models\favoritos;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -36,15 +38,6 @@ class Controller extends BaseController
         return json_encode($receta);
     }
 
-    // Recuperar los comentarios de una receta (escritos por nuestros usuarios)
-    public function comentarios($id) {
-
-    }
-
-    // Añadir un comentario a una receta
-    public function nuevoComentario($id, $comentario) {
-
-    }
 
     // categoria es number, ingredientes es array, nutriscore es number, precio es number, favorito es boolean
     public function buscador($categoria, $ingredientes, $nutriscore, $precio, $favorito) {
@@ -57,12 +50,20 @@ class Controller extends BaseController
     }
 
     // Añadir la receta a favoritos
-    public function addFavoritos($id) {
-        // El que haga esta, que haga tambien removeFavoritos()
+    public function addFavoritos($id_receta, $id_usuario) {
+        $favorito=new favoritos();
+
+        $favorito->id_receta=$id_receta;
+        $favorito->id_usuario=$id_usuario;
+
+        $favorito->save();
+        
     }
 
     // Eliminar la receta de favoritos
-    public function removeFavoritos($id) {
+    public function removeFavoritos($id_receta, $id_usuario) {
+        $favorito=favoritos::where('id_receta',$id_receta)->where('id_usuario',$id_usuario)->first();
+        $favorito->delete();
 
     }
 
