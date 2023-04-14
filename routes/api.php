@@ -42,3 +42,4 @@ Route::post('registro', [UsuarioController::class, 'registrar']); //hecho
 Route::get('addFavoritos/{id}', [Controller::class, 'addFavoritos']);
 Route::get('removeFavoritos/{id}', [Controller::class, 'removeFavoritos']);
 Route::get('ingredientes', [Controller::class, 'ingredientes']);
+Route::post('nuevaReceta', [RecetaController::class, 'crear']); //hecho

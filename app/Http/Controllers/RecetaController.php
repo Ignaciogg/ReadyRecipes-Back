@@ -7,12 +7,23 @@ use App\Models\Receta;
 
 class RecetaController extends Controller
 {
-    public function create(Request $request) {
+    public function crear(Request $request) {
+        $content = $request->getContent();
+        $receta_json = json_decode($content);
+
         $receta = new Receta();
-        $receta -> nombre = $request -> nombre;
-        $receta -> precio = $request -> precio;
-        $receta -> save();
-        return json_encode($receta);
+        $receta->url = $receta_json->url;
+        $receta->titulo = $receta_json->titulo;
+        $receta->texto = $receta_json->texto;
+        $receta->categoria = $receta_json->categoria;
+        $receta->nutriscore = $receta_json->nutriscore;
+        $receta->comentarios = $receta_json->comentarios;
+        $receta->sentimiento = $receta_json->sentimiento;
+        $receta->comentarios_positivos = $receta_json->comentarios_positivos;
+        $receta->comentarios_neutros= $receta_json->comentarios_neutros;
+        $receta->comentarios_negativos = $receta_json->comentarios_negativos;
+        $receta->save();
+        echo $receta;
     }
 
     public function getAll() {
@@ -47,5 +58,5 @@ class RecetaController extends Controller
         return json_encode($receta);
     }
 
-    
+
 }
