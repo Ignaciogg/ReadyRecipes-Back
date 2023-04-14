@@ -15,22 +15,6 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function saludo(Request $request) {
-        return json_encode("HOLA, ".$request->nombre);
-    }
-
-    public function saludo2(Request $nombre) {
-        return json_encode("HOLAAAAAA, ".$nombre->nombre);
-    }
-
-    public function bienvenida(Request $nombre, $edad) {
-        if($edad < 18) {
-            return json_encode("No eres mayor de edad, ".$nombre->nombre);
-        } else {
-            return json_encode("Bienvenido, ".$nombre->nombre);
-        }
-    }
-
     /////////////////// READY RECIPES //////////////////////
 
     // Recuperar info de una receta (nº de comentarios de YT (positivos, negativos, neutros)), nutriscore, precio
@@ -61,7 +45,7 @@ class Controller extends BaseController
 
         if ($favorito) {
             $results->join('favoritos', 'favoritos.id_Receta', '=', 'recetas.id')
-                    ->join('usuarios', 'favoritos.id_Usuario', '=', $id_usuario)
+                    ->join('usuarios', 'favoritos.id_Usuario', '=', $id_usuario);
 
         }
     
@@ -73,21 +57,16 @@ class Controller extends BaseController
         // Ejecuta la consulta y devuelve los resultados
         $results2 = $results->get();
         return json_encode($results2);
-    
-
     }
-
-    
 
     // Cerrar sesion
     public function logout() {
 
     }
 
-
     // Obtener lista de todos los ingredientes para el buscador
     public function ingredientes() {
-        $nombres_ingredientes = DB::table('alimentos')->pluck('nombre');
-        return $nombres_ingredientes;
+        $nombres_ingredientes = DB::table('alimentos')->select('id', 'nombre', 'nutriscore')->get();
+        return json_encode($nombres_ingredientes);
     }
 }
