@@ -5,6 +5,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\RecetaController;
+use App\Http\Controllers\FavoritoController;
+use App\Http\Controllers\ComentariosController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -33,13 +36,13 @@ Route::delete('receta/{id}', [RecetaController::class , 'delete']);
 ///////////////////// READY RECIPES //////////////////////
 
 Route::get('receta/{id}', [Controller::class, 'receta']);
-Route::get('comentarios/{id}', [Controller::class, 'comentarios']);
-Route::post('nuevoComentario/{id}/{comentario}', [Controller::class, 'nuevoComentario']);
+Route::post('comentarios', [ComentariosController::class, 'comentarios']);
+Route::post('nuevoComentario', [ComentariosController::class, 'nuevoComentario']);
 Route::get('buscador/{categoria}/{ingredientes}/{nutriscore}/{precio}/{favorito}', [Controller::class, 'buscador']);
 Route::post('login', [UsuarioController::class, 'login']); //hecho
 Route::get('logout', [Controller::class, 'logout']);
 Route::post('registro', [UsuarioController::class, 'registrar']); //hecho
-Route::get('addFavoritos/{id}', [Controller::class, 'addFavoritos']);
-Route::get('removeFavoritos/{id}', [Controller::class, 'removeFavoritos']);
-Route::get('ingredientes', [Controller::class, 'ingredientes']);
+Route::post('addFavoritos', [FavoritoController::class, 'addFavoritos']); //Hecho
+Route::delete('removeFavoritos/{id_receta}/{id_usuario}', [FavoritoController::class, 'removeFavoritos']); //Hecho
+Route::post('ingredientes', [Controller::class, 'ingredientes']); //Hecho
 Route::post('nuevaReceta', [RecetaController::class, 'crear']); //hecho

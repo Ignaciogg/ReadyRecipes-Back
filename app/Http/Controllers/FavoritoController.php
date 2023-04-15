@@ -9,11 +9,12 @@ use Illuminate\Http\Request;
 class FavoritoController extends Controller
 {
     // Añadir la receta a favoritos
-    public function addFavoritos($id_receta, $id_usuario) {
+    public function addFavoritos(Request $request) {
+
         $favorito=new favoritos();
 
-        $favorito->id_receta=$id_receta;
-        $favorito->id_usuario=$id_usuario;
+        $favorito->id_receta=$request->id_receta;
+        $favorito->id_usuario=$request->id_usuario;
 
         $favorito->save();
         
@@ -21,7 +22,11 @@ class FavoritoController extends Controller
 
     // Eliminar la receta de favoritos
     public function removeFavoritos($id_receta, $id_usuario) {
-        $favorito=favoritos::where('id_receta',$id_receta)->where('id_usuario',$id_usuario)->first();
+
+        $favorito=favoritos::where('id_Receta',$id_receta)
+                            ->where('id_Usuario',$id_usuario)
+                            ->first();
+
         $favorito->delete();
 
     }
