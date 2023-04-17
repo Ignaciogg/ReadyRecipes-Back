@@ -9,4 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Receta extends Model
 {
     use HasFactory, SoftDeletes;
+
+    protected $table = 'recetas';
+
 }
