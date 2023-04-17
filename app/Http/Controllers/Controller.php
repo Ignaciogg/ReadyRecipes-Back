@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Receta;
 use App\Models\favoritos;
+use App\Models\Ingredientes;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -32,51 +33,44 @@ class Controller extends BaseController
     }
 
     // categoria es varchar, ingredientes es array con los ids de los alimentos, nutriscore es varchar, precio es number, favorito es boolean
-    public function buscarReceta(Request $request) {
+    public function buscarReceta(Request $request)
+        {
             $categoria = $request->categoria;
             $nutriscore = $request->nutriscore;
             $ingredientes = $request->ingredientes;
+            $id_alimentos = explode(',', $ingredientes);
             $precio = $request->precio;
             $favorito = $request->favorito;
 
-
-            // Crear la consulta base
-            $query = Receta::query()->where('categoria', $categoria)->where('nutriscore', $nutriscore);
-
+            $query = DB::table('recetas')
+                ->select('recetas.*')
+                ->where('categoria', $categoria)
+                ->where('nutriscore', $nutriscore);
 
             // Filtrar por los ingredientes
-            /*foreach ($ingredientes as $id_alimento) {
-                $query->whereHas('ingredientes', function ($q) use ($id_alimento) {
-                    $q->where('id_alimento', $id_alimento);
-                });
-            }*/
+            foreach ($id_alimentos as $id_alimento) {
+                $query->join('ingredientes', 'ingredientes.id_receta', '=', 'recetas.id')
+                    ->join('alimentos', 'alimentos.id', '=', 'ingredientes.id_alimento')
+                    ->where('alimentos.id', $id_alimento);
+            }
 
             // Filtrar por el precio
-            /*$query->with('ingredientes.alimento');
-            $precioTotal = 0;
-            foreach ($query->get() as $receta) {
-                $precioTotal = $receta->ingredientes->sum(function ($ingrediente) {
-                    return $ingrediente->cantidad * $ingrediente->alimento->precio;
-                });
-                if ($precioTotal <= $precio) {
-                    $query = $query->where('id', $receta->id);
-                    break;
-                }
-            }
+            $query->join('ingredientes', 'ingredientes.id_receta', '=', 'recetas.id')
+                ->join('alimentos', 'alimentos.id', '=', 'ingredientes.id_alimento')
+                ->groupBy('recetas.id')
+                ->havingRaw('SUM(alimentos.precio) <= ?', [$precio]);
 
             // Filtrar por si es favorita
             if ($favorito) {
-                $query->whereHas('favoritos', function ($q) {
-                    $q->where('id_usuario', auth()->id());
-                });
-            }*/
-            
+                $query->join('favoritos', 'favoritos.id_receta', '=', 'recetas.id')
+                    ->where('favoritos.id_usuario', auth()->id());
+            }
 
             // Obtener la receta
             $receta = $query->get();
-            
+
             return $receta;
-    }
+        }
     
     // Cerrar sesion
     public function logout() {
