@@ -36,9 +36,10 @@ Route::delete('receta/{id}', [RecetaController::class , 'delete']);
 ///////////////////// READY RECIPES //////////////////////
 
 Route::get('receta/{id}', [Controller::class, 'receta']);
-Route::post('comentarios', [ComentariosController::class, 'comentarios']);
+Route::post('comentariosUsuario', [ComentariosController::class, 'comentariosUsuario']);
 Route::post('nuevoComentario', [ComentariosController::class, 'nuevoComentario']);
-Route::get('buscador/{categoria}/{ingredientes}/{nutriscore}/{precio}/{favorito}', [Controller::class, 'buscador']);
+Route::post('comentariosReceta', [ComentariosController::class, 'comentariosReceta']);
+Route::post('buscador', [Controller::class, 'buscarReceta']);
 Route::post('login', [UsuarioController::class, 'login']); //hecho
 Route::get('logout', [Controller::class, 'logout']);
 Route::post('registro', [UsuarioController::class, 'registrar']); //hecho
