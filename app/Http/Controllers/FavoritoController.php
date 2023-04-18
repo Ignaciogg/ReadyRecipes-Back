@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Favorito;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class FavoritoController extends Controller
 {
@@ -17,13 +18,18 @@ class FavoritoController extends Controller
         $favorito->id_usuario=$request->id_usuario;
 
         $favorito->save();
+
+        return response()->json([
+            'message' => 'Favorito añadido correctamente'
+        ], 200);
         
     }
 
     // Eliminar la receta de favoritos
     public function removeFavoritos($id_receta, $id_usuario) {
 
-        $favorito=Favorito::where('id_Receta', $id_receta)
+        $favorito=DB::table('favoritos')
+                            ->where('id_Receta', $id_receta)
                             ->where('id_Usuario', $id_usuario)
                             ->first();
 
@@ -33,7 +39,10 @@ class FavoritoController extends Controller
             ], 404);
         }
 
-        $favorito->delete();
+        DB::table('favoritos')->where('id', $favorito->id)->delete();
 
+        return response()->json([
+            'message' => 'Favorito eliminado correctamente'
+        ], 200);
     }
 }
