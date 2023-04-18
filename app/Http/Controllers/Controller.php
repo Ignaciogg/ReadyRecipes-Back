@@ -6,6 +6,7 @@ use App\Models\Receta;
 use App\Models\Precio;
 use App\Models\favoritos;
 use App\Models\Ingredientes;
+use Hamcrest\Arrays\IsArray;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -41,7 +42,7 @@ class Controller extends BaseController
             }
             
             if($request->ingredientes){
-                $ids_alimentos = explode(',',$request->ingredientes);
+                $ids_alimentos = $request->ingredientes;
                 $query= $query->select('recetas.id','recetas.titulo','recetas.categoria','recetas.nutriscore')
                         ->join('ingredientes as i', 'recetas.id', '=', 'i.id_receta')
                         ->whereIn('i.id_alimento', $ids_alimentos)
@@ -84,7 +85,7 @@ class Controller extends BaseController
                 ], 404);
             }
 
-            return json_encode($query->get());
+            return json_encode($query->get('id'));
         }
     
     // Cerrar sesion
