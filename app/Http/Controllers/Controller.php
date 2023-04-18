@@ -63,7 +63,7 @@ class Controller extends BaseController
                             ->pluck('recetas.id');
 
                 $query->whereIn('recetas.id', $subquery)
-                        ->select('recetas.id');
+                        ->select('recetas.id','recetas.titulo','recetas.categoria','recetas.nutriscore');
 
             }
 
@@ -73,13 +73,13 @@ class Controller extends BaseController
                     $query=$query->join('favoritos', 'favoritos.id_receta', '=', 'recetas.id')
                             ->join('usuarios', 'favoritos.id_usuario', '=', 'usuarios.id')
                             ->where('favoritos.id_usuario', $request->id_usuario)
-                            ->select('recetas.id');
+                            ->select('recetas.id','recetas.titulo','recetas.categoria','recetas.nutriscore');
                     }
                 
             }
 
 
-            return json_encode($query->get('id'));
+            return json_encode($query->get());
         }
     
     // Cerrar sesion
