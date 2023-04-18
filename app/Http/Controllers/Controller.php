@@ -37,7 +37,7 @@ class Controller extends BaseController
             }
 
             if($request->nutriscore){
-                $query=$query->where('recetas.nutriscore', $request->nutriscore);
+                $query=$query->where('recetas.nutriscore', '>=', $request->nutriscore);
             }
             
             if($request->ingredientes){
