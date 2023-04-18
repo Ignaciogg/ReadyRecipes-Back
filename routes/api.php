@@ -44,6 +44,6 @@ Route::post('login', [UsuarioController::class, 'login']); //hecho
 Route::get('logout', [Controller::class, 'logout']);
 Route::post('registro', [UsuarioController::class, 'registrar']); //hecho
 Route::post('addFavoritos', [FavoritoController::class, 'addFavoritos']); //Hecho
-Route::delete('removeFavoritos/{id_receta}/{id_usuario}', [FavoritoController::class, 'removeFavoritos']); //Hecho
+Route::delete('removeFavoritos/{id_receta}/{id_usuario}',[FavoritoController::class, 'removeFavoritos']); //Hecho
 Route::post('ingredientes', [Controller::class, 'ingredientes']); //Hecho
 Route::post('nuevaReceta', [RecetaController::class, 'crear']); //hecho

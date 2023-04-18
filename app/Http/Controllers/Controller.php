@@ -78,6 +78,11 @@ class Controller extends BaseController
                 
             }
 
+            if($query->count()==0){
+                return response()->json([
+                    'message' => 'No existe la receta'
+                ], 404);
+            }
 
             return json_encode($query->get());
         }
