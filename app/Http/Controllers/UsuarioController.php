@@ -34,7 +34,12 @@ class UsuarioController extends Controller
         if ($pass == $usuario->pass) {
             // Si la contraseña es correcta, devuelve el id_usuario
             //quiero devolver el id del usuario y la variable administrador
-            return response()->json(['id_usuario' => $usuario->id_Usuario, 'administrador' => $usuario->administrador], 200);
+            return response()->json([
+                'id_usuario' => $usuario->id_Usuario,
+                'administrador' => $usuario->administrador,
+                'nombre' => $usuario->nombre,
+                'apellidos' => $usuario->apellidos
+            ], 200);
         } else {
             // Si la contraseña no coincide, regresa un mensaje de error
             return response()->json(['mensaje' => 'La contraseña es incorrecta'], 401);
