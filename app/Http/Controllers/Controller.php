@@ -58,7 +58,7 @@ class Controller extends BaseController
                 $subquery = $query->join('ingredientes as i2', 'recetas.id', '=', 'i2.id_receta')
                             ->join('alimentos as a', 'i2.id_alimento', '=', 'a.id')
                             ->join('precios as p', 'a.id', '=', 'p.id_alimento')
-                            ->whereIn('a.id', explode(',',$request->ingredientes))
+                            ->whereIn('a.id', $request->ingredientes)
                             ->groupBy('recetas.id')
                             ->havingRaw('SUM(p.precio) <= ?', [$request->precio])
                             ->pluck('recetas.id');
