@@ -33,11 +33,11 @@ class Controller extends BaseController
             $query=Receta::query();
 
             if($request->categoria){
-                $query= $query->where('categoria', $request->categoria);
+                $query= $query->where('recetas.categoria', $request->categoria);
             }
 
             if($request->nutriscore){
-                $query=$query->where('nutriscore', $request->nutriscore);
+                $query=$query->where('recetas.nutriscore', $request->nutriscore);
             }
             
             if($request->ingredientes){
@@ -54,8 +54,8 @@ class Controller extends BaseController
 
                 //$precio_alimentos=$precio->calcular_precio_alimentos($request->ingredientes);
 
-                $subquery = $query->join('ingredientes as i', 'recetas.id', '=', 'i.id_receta')
-                            ->join('alimentos as a', 'i.id_alimento', '=', 'a.id')
+                $subquery = $query->join('ingredientes as i2', 'recetas.id', '=', 'i2.id_receta')
+                            ->join('alimentos as a', 'i2.id_alimento', '=', 'a.id')
                             ->join('precios as p', 'a.id', '=', 'p.id_alimento')
                             ->whereIn('a.id', explode(',',$request->ingredientes))
                             ->groupBy('recetas.id')
@@ -79,7 +79,7 @@ class Controller extends BaseController
             }
 
 
-            return json_encode($subquery);
+            return json_encode($query->get('id'));
         }
     
     // Cerrar sesion
