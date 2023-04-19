@@ -7,6 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\RecetaController;
 use App\Http\Controllers\FavoritoController;
 use App\Http\Controllers\ComentariosController;
+use App\Http\Controllers\AlimentoController;
+use App\Http\Controllers\IngredienteController;
+
+
 
 
 /*
@@ -47,3 +51,6 @@ Route::post('addFavoritos', [FavoritoController::class, 'addFavoritos']); //Hech
 Route::delete('removeFavoritos/{id_receta}/{id_usuario}', [FavoritoController::class, 'removeFavoritos']); //Hecho
 Route::post('ingredientes', [Controller::class, 'ingredientes']); //Hecho
 Route::post('nuevaReceta', [RecetaController::class, 'crear']); //hecho
+Route::post('nuevoAlimento', [AlimentoController::class, 'crear']); //hecho
+Route::post('nuevoIngrediente', [IngredienteController::class, 'crear']); //hecho
+
