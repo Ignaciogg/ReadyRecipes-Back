@@ -38,12 +38,15 @@ class Controller extends BaseController
                         
 
         if ($receta) {
-            $response = [
+            $receta->ingredientes = $ingredientes;
+            $receta->precio = $precio_total;
+
+            /*$response = [
                 'receta' => $receta,
                 'ingredientes' => $ingredientes,
                 'precio_total' => $precio_total,
-            ];
-            return json_encode($response);
+            ];*/
+            return json_encode($receta);
         } else {
 
             return json_encode(['error' => 'No se encontraron registros']);
@@ -104,7 +107,7 @@ class Controller extends BaseController
             }
 
 
-            return json_encode($query->get('id'));
+            return json_encode($query->get());
         }
     
     // Cerrar sesion
