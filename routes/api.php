@@ -41,7 +41,7 @@ Route::delete('receta/{id}', [RecetaController::class , 'delete']);
 
 ///////////////////// READY RECIPES //////////////////////
 
-Route::get('receta/{id}', [Controller::class, 'receta']);
+Route::post('receta', [Controller::class, 'receta']);
 Route::post('comentariosUsuario', [ComentariosController::class, 'comentariosUsuario']);
 Route::post('nuevoComentario', [ComentariosController::class, 'nuevoComentario']);
 Route::post('comentariosReceta', [ComentariosController::class, 'comentariosReceta']);
@@ -50,7 +50,7 @@ Route::post('login', [UsuarioController::class, 'login']); //hecho
 Route::get('logout', [Controller::class, 'logout']);
 Route::post('registro', [UsuarioController::class, 'registrar']); //hecho
 Route::post('addFavoritos', [FavoritoController::class, 'addFavoritos']); //Hecho
-Route::delete('removeFavoritos/{id_receta}/{id_usuario}', [FavoritoController::class, 'removeFavoritos']); //Hecho
+Route::delete('removeFavoritos/{id_receta}/{id_usuario}',[FavoritoController::class, 'removeFavoritos']); //Hecho
 Route::post('ingredientes', [Controller::class, 'ingredientes']); //Hecho
 Route::post('nuevaReceta', [RecetaController::class, 'crear']); //hecho
 Route::post('nuevoAlimento', [AlimentoController::class, 'crear']); //hecho
