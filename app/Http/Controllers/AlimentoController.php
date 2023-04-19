@@ -17,4 +17,8 @@ class AlimentoController extends Controller
         $alimento->save();
         echo $alimento;
     }
+    public function getAll(Request $request) {
+        $alimentos = Alimento::select('id', 'nombre')->get();
+        echo $alimentos;
+    }
 }

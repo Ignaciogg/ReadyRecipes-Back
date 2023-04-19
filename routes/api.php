@@ -9,6 +9,8 @@ use App\Http\Controllers\FavoritoController;
 use App\Http\Controllers\ComentariosController;
 use App\Http\Controllers\AlimentoController;
 use App\Http\Controllers\IngredienteController;
+use App\Http\Controllers\PrecioController;
+
 
 
 
@@ -53,4 +55,6 @@ Route::post('ingredientes', [Controller::class, 'ingredientes']); //Hecho
 Route::post('nuevaReceta', [RecetaController::class, 'crear']); //hecho
 Route::post('nuevoAlimento', [AlimentoController::class, 'crear']); //hecho
 Route::post('nuevoIngrediente', [IngredienteController::class, 'crear']); //hecho
+Route::post('nuevoPrecio', [PrecioController::class, 'crear']); //hecho
+Route::get('alimentos', [AlimentoController::class, 'getAll']);
 
