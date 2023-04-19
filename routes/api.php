@@ -35,7 +35,7 @@ Route::delete('receta/{id}', [RecetaController::class , 'delete']);
 
 ///////////////////// READY RECIPES //////////////////////
 
-Route::get('receta/{id}', [Controller::class, 'receta']);
+Route::post('receta', [Controller::class, 'receta']);
 Route::post('comentariosUsuario', [ComentariosController::class, 'comentariosUsuario']);
 Route::post('nuevoComentario', [ComentariosController::class, 'nuevoComentario']);
 Route::post('comentariosReceta', [ComentariosController::class, 'comentariosReceta']);
