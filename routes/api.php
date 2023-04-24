@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\UsuarioController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
@@ -10,11 +9,7 @@ use App\Http\Controllers\ComentariosController;
 use App\Http\Controllers\AlimentoController;
 use App\Http\Controllers\IngredienteController;
 use App\Http\Controllers\PrecioController;
-
-
-
-
-
+use App\Http\Controllers\UsuarioController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -30,31 +25,41 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get("saludo", [Controller::class, "saludo"]);
-Route::get("saludo2/{nombre}", [Controller::class, "saludo2"]);
-Route::post("bienvenida/{edad}", [Controller::class, "bienvenida"]);
 
-Route::post('recetas/create', [RecetaController::class , 'create']);
-Route::get('recetas/getAll', [RecetaController::class , 'getAll']);
+//Route::post('recetas/create', [RecetaController::class , 'create']);
 // Route::get('receta/{id}', [RecetaController::class , 'get']);
-Route::delete('receta/{id}', [RecetaController::class , 'delete']);
+//Route::delete('receta/{id}', [RecetaController::class , 'delete']);
 
 ///////////////////// READY RECIPES //////////////////////
 
-Route::post('receta', [Controller::class, 'receta']);
+//RECETAS
+Route::post('receta', [RecetaController::class, 'obtenerReceta']);
+Route::post('buscador', [RecetaController::class, 'buscarReceta']);
+Route::post('nuevaReceta', [RecetaController::class, 'crear']); //hecho
+Route::get('recetas/getAll', [RecetaController::class , 'getAll']);
+
+
+//COMENTARIOS  
 Route::post('comentariosUsuario', [ComentariosController::class, 'comentariosUsuario']);
 Route::post('nuevoComentario', [ComentariosController::class, 'nuevoComentario']);
 Route::post('comentariosReceta', [ComentariosController::class, 'comentariosReceta']);
-Route::post('buscador', [Controller::class, 'buscarReceta']);
+
+//USUARIOS
 Route::post('login', [UsuarioController::class, 'login']); //hecho
-Route::get('logout', [Controller::class, 'logout']);
+Route::get('logout', [UsuarioController::class, 'logout']);
 Route::post('registro', [UsuarioController::class, 'registrar']); //hecho
+
+//FAVORITOS
 Route::post('addFavoritos', [FavoritoController::class, 'addFavoritos']); //Hecho
-Route::delete('removeFavoritos/{id_receta}/{id_usuario}',[FavoritoController::class, 'removeFavoritos']); //Hecho
-Route::post('ingredientes', [Controller::class, 'ingredientes']); //Hecho
-Route::post('nuevaReceta', [RecetaController::class, 'crear']); //hecho
-Route::post('nuevoAlimento', [AlimentoController::class, 'crear']); //hecho
+Route::delete('removeFavoritos/{id_receta}/{id_usuario}',[FavoritoController::class, 'removeFavoritos']); //Hecho4
+
+//INGREDIENTES
+Route::post('ingredientes', [IngredienteController::class, 'ingredientes']); //Hecho
 Route::post('nuevoIngrediente', [IngredienteController::class, 'crear']); //hecho
-Route::post('nuevoPrecio', [PrecioController::class, 'crear']); //hecho
+
+//ALIMENTOS
+Route::post('nuevoAlimento', [AlimentoController::class, 'crear']); //hecho
 Route::get('alimentos', [AlimentoController::class, 'getAll']);
 
+//PRECIOS
+Route::post('nuevoPrecio', [PrecioController::class, 'crear']); //hecho

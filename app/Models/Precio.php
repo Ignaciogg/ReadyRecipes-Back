@@ -13,7 +13,7 @@ class Precio extends Model
 
     protected $table = 'precios';
 
-    public function calcular_precio_alimentos($alimentos){
+    /*public function calcular_precio_alimentos($alimentos){
         $precio=0;
         $alimentos_div=explode(',', $alimentos);
         foreach($alimentos_div as $alimento){
@@ -23,5 +23,5 @@ class Precio extends Model
                     ->first()->precio;
         }
         return $precio;
-    }
+    }*/
 }

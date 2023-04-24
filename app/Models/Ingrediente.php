@@ -9,6 +9,5 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Ingrediente extends Model
 {
     use HasFactory, SoftDeletes;
-
     protected $table = 'ingredientes';
 }

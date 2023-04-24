@@ -46,4 +46,7 @@ class UsuarioController extends Controller
         }
     }
 
+    public function logout() {
+
+    }
 }
