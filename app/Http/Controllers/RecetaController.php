@@ -86,12 +86,12 @@ class RecetaController extends Controller
                 $subquery = $query->join('ingredientes as i2', 'recetas.id', '=', 'i2.id_receta')
                             ->join('alimentos as a', 'i2.id_alimento', '=', 'a.id')
                             ->join('precios as p', 'a.id', '=', 'p.id_alimento')
-                            ->groupBy('recetas.id','recetas.id','recetas.titulo','recetas.categoria','recetas.nutriscore')
+                            ->groupBy('recetas.id','recetas.id','recetas.titulo','recetas.categoria','recetas.nutriscore','p.precio')
                             ->havingRaw('SUM(p.precio) <= ?', [$request->precio])
                             ->pluck('recetas.id');
 
                 $query->whereIn('recetas.id', $subquery)
-                        ->select('recetas.id','recetas.titulo','recetas.categoria','recetas.nutriscore');
+                        ->select('recetas.id','recetas.titulo','recetas.categoria','recetas.nutriscore','p.precio');
 
             }
 
@@ -110,8 +110,18 @@ class RecetaController extends Controller
                 return response()->json([
                     'message' => 'No existe la receta'
                 ], 404);
-        
             }
+
+            /*$precio_total = $query->join('ingredientes as i', 'recetas.id', '=', 'i.id_receta')
+                            ->join('alimentos as a', 'i.id_alimento', '=', 'a.id')
+                            ->join('precios as p', 'a.id', '=', 'p.id_alimento')
+                            ->where('i.id_receta',$query->id )
+                            ->sum('p.precio');*/
+                            
+
+            /*if ($query) {
+                $query->precio = $precio_total;
+            }*/
 
             return json_encode($query->get());
         }
