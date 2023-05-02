@@ -46,6 +46,16 @@ class UsuarioController extends Controller
         }
     }
 
+    public function infoUsuario(Request $request) {
+        $usuario = Usuario::where('id', $request->id)->first();
+        return json_encode($usuario);
+    }
+
+    public function eliminarUsuario(Request $request) {
+        $usuario = Usuario::where('email', $request->email)->first();
+        $usuario->delete();
+    }
+
     public function logout() {
 
     }
