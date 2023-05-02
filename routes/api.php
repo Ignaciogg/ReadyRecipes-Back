@@ -37,7 +37,7 @@ Route::post('receta', [RecetaController::class, 'obtenerReceta']);
 Route::post('buscador', [RecetaController::class, 'buscarReceta']);
 Route::post('nuevaReceta', [RecetaController::class, 'crear']); //hecho
 Route::get('recetas/getAll', [RecetaController::class , 'getAll']);
-
+Route::post('modificarReceta', [RecetaController::class, 'modificarReceta']);
 
 //COMENTARIOS  
 Route::post('comentariosUsuario', [ComentariosController::class, 'comentariosUsuario']);
