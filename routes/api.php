@@ -2,7 +2,6 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Controller;
 use App\Http\Controllers\RecetaController;
 use App\Http\Controllers\FavoritoController;
 use App\Http\Controllers\ComentariosController;
@@ -39,7 +38,7 @@ Route::post('nuevaReceta', [RecetaController::class, 'crear']); //hecho
 Route::get('recetas/getAll', [RecetaController::class , 'getAll']);
 
 
-//COMENTARIOS  
+//COMENTARIOS
 Route::post('comentariosUsuario', [ComentariosController::class, 'comentariosUsuario']);
 Route::post('nuevoComentario', [ComentariosController::class, 'nuevoComentario']);
 Route::post('comentariosReceta', [ComentariosController::class, 'comentariosReceta']);
@@ -48,6 +47,7 @@ Route::post('comentariosReceta', [ComentariosController::class, 'comentariosRece
 Route::post('login', [UsuarioController::class, 'login']); //hecho
 Route::get('logout', [UsuarioController::class, 'logout']);
 Route::post('registro', [UsuarioController::class, 'registrar']); //hecho
+Route::post('me', [UsuarioController::class, 'me']); //hecho
 
 //FAVORITOS
 Route::post('addFavoritos', [FavoritoController::class, 'addFavoritos']); //Hecho
@@ -63,3 +63,11 @@ Route::get('alimentos', [AlimentoController::class, 'getAll']);
 
 //PRECIOS
 Route::post('nuevoPrecio', [PrecioController::class, 'crear']); //hecho
+
+
+//Cifrar passwords
+Route::post('actualizarPasswords', [UsuarioController::class, 'actualizarPasswords']); //hecho
+
+Route::middleware('auth')->get('/dashboard', function () {
+    return view('dashboard');
+});
