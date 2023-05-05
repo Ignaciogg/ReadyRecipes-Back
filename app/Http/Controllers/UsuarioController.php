@@ -72,16 +72,6 @@ class UsuarioController extends Controller
         $usuario->delete();
     }
 
-    public function infoUsuario(Request $request) {
-        $usuario = Usuario::where('id', $request->id)->first();
-        return json_encode($usuario);
-    }
-
-    public function eliminarUsuario(Request $request) {
-        $usuario = Usuario::where('email', $request->email)->first();
-        $usuario->delete();
-    }
-
     protected function respondWithToken($token)
     {
         return response()->json([

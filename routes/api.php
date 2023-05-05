@@ -73,3 +73,13 @@ Route::post('actualizarPasswords', [UsuarioController::class, 'actualizarPasswor
 Route::middleware('auth')->get('/dashboard', function () {
     return view('dashboard');
 });
+
+//test para middleware que me devuelve el usuario logeado
+Route::middleware('auth')->get('/user', function (Request $request) {
+    return $request->user();
+});
+
+//test para middlewrare que me devuelve si el usuario es admin
+Route::middleware('admin')->get('/admin', function (Request $request) {
+    return "El usuario es admin";
+});

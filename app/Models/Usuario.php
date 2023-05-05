@@ -31,4 +31,8 @@ class Usuario extends Authenticatable implements JWTSubject
 
         return ["user"=>$this];
     }
+    public function is_admin()
+    {
+        return $this->administrador == 1;
+    }
 }
