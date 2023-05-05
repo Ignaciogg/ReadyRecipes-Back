@@ -34,9 +34,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //RECETAS
 Route::post('receta', [RecetaController::class, 'obtenerReceta']);
 Route::post('buscador', [RecetaController::class, 'buscarReceta']);
-Route::post('nuevaReceta', [RecetaController::class, 'crear']); //hecho
+Route::post('nuevaReceta', [RecetaController::class, 'crear']); // hecho
 Route::get('recetas/getAll', [RecetaController::class , 'getAll']);
-
+Route::post('modificarReceta', [RecetaController::class, 'modificarReceta']);
 
 //COMENTARIOS
 Route::post('comentariosUsuario', [ComentariosController::class, 'comentariosUsuario']);
@@ -44,25 +44,27 @@ Route::post('nuevoComentario', [ComentariosController::class, 'nuevoComentario']
 Route::post('comentariosReceta', [ComentariosController::class, 'comentariosReceta']);
 
 //USUARIOS
-Route::post('login', [UsuarioController::class, 'login']); //hecho
+Route::post('login', [UsuarioController::class, 'login']); // hecho
 Route::get('logout', [UsuarioController::class, 'logout']);
-Route::post('registro', [UsuarioController::class, 'registrar']); //hecho
+Route::post('registro', [UsuarioController::class, 'registrar']); // hecho
+Route::post('infoUsuario', [UsuarioController::class, 'infoUsuario']);
+Route::post('eliminarUsuario', [UsuarioController::class, 'eliminarUsuario']);
 Route::post('me', [UsuarioController::class, 'me']); //hecho
 
 //FAVORITOS
-Route::post('addFavoritos', [FavoritoController::class, 'addFavoritos']); //Hecho
-Route::delete('removeFavoritos/{id_receta}/{id_usuario}',[FavoritoController::class, 'removeFavoritos']); //Hecho4
+Route::post('addFavoritos', [FavoritoController::class, 'addFavoritos']); // hecho
+Route::delete('removeFavoritos/{id_receta}/{id_usuario}',[FavoritoController::class, 'removeFavoritos']); // hecho
 
 //INGREDIENTES
-Route::post('ingredientes', [IngredienteController::class, 'ingredientes']); //Hecho
-Route::post('nuevoIngrediente', [IngredienteController::class, 'crear']); //hecho
+Route::post('ingredientes', [IngredienteController::class, 'ingredientes']); // hecho
+Route::post('nuevoIngrediente', [IngredienteController::class, 'crear']); // hecho
 
 //ALIMENTOS
-Route::post('nuevoAlimento', [AlimentoController::class, 'crear']); //hecho
+Route::post('nuevoAlimento', [AlimentoController::class, 'crear']); // hecho
 Route::get('alimentos', [AlimentoController::class, 'getAll']);
 
 //PRECIOS
-Route::post('nuevoPrecio', [PrecioController::class, 'crear']); //hecho
+Route::post('nuevoPrecio', [PrecioController::class, 'crear']); // hecho
 
 
 //Cifrar passwords
