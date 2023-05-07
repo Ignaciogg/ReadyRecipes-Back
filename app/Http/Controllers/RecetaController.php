@@ -125,4 +125,13 @@ class RecetaController extends Controller
         // $receta->comentarios_negativos = $receta_json->comentarios_negativos; // No se modifica en el front
         $actual->save();
     }
+
+    public function recetasPorCategoria()
+    {
+        $recetasPorCategoria = DB::table('recetas')
+            ->select('categoria', DB::raw('count(*) as total'))
+            ->groupBy('categoria')
+            ->get();
+        return response()->json($recetasPorCategoria);
+    }
 }

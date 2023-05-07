@@ -37,6 +37,7 @@ Route::post('buscador', [RecetaController::class, 'buscarReceta']);
 Route::post('nuevaReceta', [RecetaController::class, 'crear']); // hecho
 Route::get('recetas/getAll', [RecetaController::class , 'getAll']);
 Route::post('modificarReceta', [RecetaController::class, 'modificarReceta']);
+Route::post('recetasPorCategoria', [RecetaController::class, 'recetasPorCategoria']);
 
 //COMENTARIOS
 Route::post('comentariosUsuario', [ComentariosController::class, 'comentariosUsuario']);
@@ -49,6 +50,7 @@ Route::get('logout', [UsuarioController::class, 'logout']);
 Route::post('registro', [UsuarioController::class, 'registrar']); // hecho
 Route::post('infoUsuario', [UsuarioController::class, 'infoUsuario']);
 Route::post('eliminarUsuario', [UsuarioController::class, 'eliminarUsuario']);
+Route::post('numeroUsuarios', [UsuarioController::class, 'numeroUsuarios']); //hecho
 Route::post('me', [UsuarioController::class, 'me']); //hecho
 
 //FAVORITOS

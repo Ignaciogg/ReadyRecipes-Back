@@ -8,8 +8,7 @@ use App\Http\Controllers\Controller;
 
 class UsuarioController extends Controller
 {
-    public function registrar(Request $request)
-    {
+    public function registrar(Request $request) {
         $usuario = new Usuario();
         $usuario->nombre = $request->nombre;
         $usuario->apellidos = $request->apellidos;
@@ -20,9 +19,7 @@ class UsuarioController extends Controller
         return json_encode($usuario);
     }
 
-    public function login(Request $request)
-    {
-
+    public function login(Request $request) {
         $email = $request->email;
         $pass = hash('sha256', $request->pass);
 
@@ -45,20 +42,17 @@ class UsuarioController extends Controller
         return $this->respondWithToken($token);
     }
 
-    public function me()
-    {
+    public function me() {
         return response()->json(auth()->user());
     }
 
-    public function logout()
-    {
+    public function logout() {
         auth()->logout();
 
         return response()->json(['message' => 'Successfully logged out']);
     }
 
-    public function refresh()
-    {
+    public function refresh() {
         return $this->respondWithToken(auth()->refresh());
     }
 
@@ -72,8 +66,7 @@ class UsuarioController extends Controller
         $usuario->delete();
     }
 
-    protected function respondWithToken($token)
-    {
+    protected function respondWithToken($token) {
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
@@ -81,12 +74,39 @@ class UsuarioController extends Controller
         ]);
     }
 
-    public function actualizarPasswords()
-    {
+    public function actualizarPasswords() {
         $usuarios = Usuario::all();
         foreach ($usuarios as $usuario) {
             $usuario->pass = hash('sha256', $usuario->pass);
             $usuario->save();
         }
+    }
+
+    public function numeroUsuarios() {
+        $contador = 0;
+        $modifs = collect();
+        $users = Usuario::orderBy("created_at")->withTrashed()->get();
+        foreach($users as $us) {
+            $modifs->push([
+                "fecha" => $us->created_at->toDateString(),
+                "num" => 1
+            ]);
+        }
+        $users = Usuario::orderBy("deleted_at")->onlyTrashed()->get();
+        foreach($users as $us) {
+            $modifs->push([
+                "fecha" => $us->deleted_at->toDateString(),
+                "num" => -1
+            ]);
+        }
+        $agrupado = $modifs->groupBy('fecha')->map(function($item) {
+            return $item->sum('num');
+        })->sortBy('fecha');
+        $agrupado = $modifs->groupBy('fecha')->map(function($item) use (&$anterior) {
+            $num = $item->sum('num');
+            $anterior += $num;
+            return $anterior;
+        })->sortBy('fecha');
+        return response()->json($agrupado);
     }
 }
