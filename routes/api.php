@@ -38,6 +38,7 @@ Route::post('nuevaReceta', [RecetaController::class, 'crear']); // hecho
 Route::get('recetas/getAll', [RecetaController::class , 'getAll']);
 Route::post('modificarReceta', [RecetaController::class, 'modificarReceta']);
 Route::post('recetasPorCategoria', [RecetaController::class, 'recetasPorCategoria']);
+Route::post('recetasPorNutriscore', [RecetaController::class, 'recetasPorNutriscore']);
 
 //COMENTARIOS
 Route::post('comentariosUsuario', [ComentariosController::class, 'comentariosUsuario']);

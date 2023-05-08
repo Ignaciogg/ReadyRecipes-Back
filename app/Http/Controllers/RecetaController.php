@@ -134,4 +134,13 @@ class RecetaController extends Controller
             ->get();
         return response()->json($recetasPorCategoria);
     }
+
+    public function recetasPorNutriscore() {
+        $recetasPorPrecio = DB::table('recetas')
+        ->select(DB::raw('ROUND(nutriscore, 1) AS nutriscore_rounded'), DB::raw('COUNT(*) as total'))
+            ->groupBy('nutriscore')
+            ->having('total', '>', 2)
+            ->get();
+        return response()->json($recetasPorPrecio);
+    }
 }
