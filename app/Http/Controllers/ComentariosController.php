@@ -24,20 +24,39 @@ class ComentariosController extends Controller
             ->select('usuarios.nombre', 'usuarios.apellidos', 'comentarios.contenido')
             ->where('comentarios.id_Receta', $id_receta)
             ->get();
-        
-
         return json_encode($resultado);
     }
 
     public function nuevoComentario(Request $request) {
-
         $comentario = new Comentario();
-
         $comentario->id_Receta = $request->id_receta;
         $comentario->id_Usuario = $request->id_usuario;
         $comentario->contenido = $request->contenido;
-        
         $comentario->save();
+    }
 
+    public function numeroComentarios(Request $request) {
+        $contador = 0;
+        $modifs = collect();
+        $coments = Comentario::orderBy("created_at")->withTrashed()->get();
+        foreach($coments as $co) {
+            $modifs->push([
+                "fecha" => $co->created_at->toDateString(),
+                "num" => 1
+            ]);
+        }
+        $coments = Comentario::orderBy("deleted_at")->onlyTrashed()->get();
+        foreach($coments as $co) {
+            $modifs->push([
+                "fecha" => $co->deleted_at->toDateString(),
+                "num" => -1
+            ]);
+        }
+        $agrupado = $modifs->groupBy('fecha')->map(function($item) use (&$anterior) {
+            $num = $item->sum('num');
+            $anterior += $num;
+            return $anterior;
+        })->sortBy('fecha');
+        return response()->json($agrupado);
     }
 }

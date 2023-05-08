@@ -99,9 +99,6 @@ class UsuarioController extends Controller
                 "num" => -1
             ]);
         }
-        $agrupado = $modifs->groupBy('fecha')->map(function($item) {
-            return $item->sum('num');
-        })->sortBy('fecha');
         $agrupado = $modifs->groupBy('fecha')->map(function($item) use (&$anterior) {
             $num = $item->sum('num');
             $anterior += $num;

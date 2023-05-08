@@ -43,6 +43,7 @@ Route::post('recetasPorCategoria', [RecetaController::class, 'recetasPorCategori
 Route::post('comentariosUsuario', [ComentariosController::class, 'comentariosUsuario']);
 Route::post('nuevoComentario', [ComentariosController::class, 'nuevoComentario']);
 Route::post('comentariosReceta', [ComentariosController::class, 'comentariosReceta']);
+Route::post('numeroComentarios', [ComentariosController::class, 'numeroComentarios']); //hecho
 
 //USUARIOS
 Route::post('login', [UsuarioController::class, 'login']); // hecho
@@ -67,7 +68,6 @@ Route::get('alimentos', [AlimentoController::class, 'getAll']);
 
 //PRECIOS
 Route::post('nuevoPrecio', [PrecioController::class, 'crear']); // hecho
-
 
 //Cifrar passwords
 Route::post('actualizarPasswords', [UsuarioController::class, 'actualizarPasswords']); //hecho
