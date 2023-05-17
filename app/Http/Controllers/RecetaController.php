@@ -155,4 +155,22 @@ class RecetaController extends Controller
         // $receta->comentarios_negativos = $receta_json->comentarios_negativos; // No se modifica en el front
         $actual->save();
     }
+
+    public function recetasPorCategoria()
+    {
+        $recetasPorCategoria = DB::table('recetas')
+            ->select('categoria', DB::raw('count(*) as total'))
+            ->groupBy('categoria')
+            ->get();
+        return response()->json($recetasPorCategoria);
+    }
+
+    public function recetasPorNutriscore() {
+        $recetasPorPrecio = DB::table('recetas')
+        ->select(DB::raw('ROUND(nutriscore, 1) AS nutriscore_rounded'), DB::raw('COUNT(*) as total'))
+            ->groupBy('nutriscore')
+            ->having('total', '>', 2)
+            ->get();
+        return response()->json($recetasPorPrecio);
+    }
 }
