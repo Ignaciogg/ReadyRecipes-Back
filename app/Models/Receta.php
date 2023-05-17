@@ -30,7 +30,7 @@ class Receta extends Model
     public function calcularPrecio(){
         $precio_total=0;
         foreach($this->ingredientes as $ingrediente){
-            $precio_total += $ingrediente->alimento->precio;
+            $precio_total += $ingrediente->alimento->precios[0]->precio;
         }
         return $precio_total;
     }

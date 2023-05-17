@@ -11,7 +11,7 @@ class RecetaController extends Controller
     public function crear(Request $request) {
         $content = $request->getContent();
         $receta_json = json_decode($content);
-        
+
         $receta = new Receta();
         $receta->url = $receta_json->url;
         $receta->titulo = $receta_json->titulo;
@@ -33,25 +33,17 @@ class RecetaController extends Controller
 
     public function obtenerReceta($id){
         $receta = Receta::find($id);
-        /*$ingredientes=$receta->join('ingredientes as i', 'recetas.id', '=', 'i.id_receta')
-                            ->join('alimentos as a', 'i.id_alimento', '=', 'a.id')
-                            ->where('i.id_receta', $id)
-                            ->select('i.id_alimento','a.nombre')->get();*/
-
         $ingredientes=$receta->ingredientes;
-
-        /*$precio_total = $receta->join('ingredientes as i', 'recetas.id', '=', 'i.id_receta')
-                        ->join('alimentos as a', 'i.id_alimento', '=', 'a.id')
-                        ->join('precios as p', 'a.id', '=', 'p.id_alimento')
-                        ->where('i.id_receta', $id)
-                        ->sum('p.precio');*/
-
-        
 
         if ($receta) {
             $receta->ingredientes = $ingredientes;
             $receta->precio = $receta->calcularPrecio();
-
+            $alimentos = [];
+            foreach($ingredientes as $ingrediente){
+                array_push($alimentos, $ingrediente->alimento->nombre);
+            }
+            unset($receta->ingredientes);
+            $receta->ingredientes = $alimentos;
             return json_encode($receta);
         } else {
 
@@ -70,7 +62,7 @@ class RecetaController extends Controller
             if($request->nutriscore){
                 $query=$query->where('recetas.nutriscore', '>=', $request->nutriscore);
             }
-            
+
             if($request->ingredientes){
                 $ids_alimentos = $request->ingredientes;
                 $query= $query->select('recetas.id','recetas.titulo','recetas.categoria','recetas.nutriscore')
@@ -88,12 +80,12 @@ class RecetaController extends Controller
                             ->where('favoritos.id_usuario', $request->id_usuario)
                             ->select('recetas.id','recetas.titulo','recetas.categoria','recetas.nutriscore');
                     }
-                
+
             }
 
 
             $recetas=$query->get();
-            
+
 
             if($request->precio){
                 foreach($recetas as $receta){
@@ -104,7 +96,7 @@ class RecetaController extends Controller
 
                 /*$id_recetas=Receta::pluck('id');
 
-                for ($i=0; $i < count($id_recetas); $i++) { 
+                for ($i=0; $i < count($id_recetas); $i++) {
                     $precio_total = DB::table('recetas')->join('ingredientes as i', 'recetas.id', '=', 'i.id_Receta')
                     ->join('alimentos as a', 'i.id_Alimento', '=', 'a.id')
                     ->join('precios as p', 'a.id', '=', 'p.id_Alimento')
@@ -120,10 +112,10 @@ class RecetaController extends Controller
                 $query=$query->whereIn('recetas.id', $id_recetas)
                         ->select('recetas.id','recetas.titulo','recetas.categoria','recetas.nutriscore');
                         //->take(10);*/
-                        
+
             }
 
-            
+
 
             if($recetas->count()==0){
                 return response()->json([
