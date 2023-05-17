@@ -62,8 +62,8 @@ class UsuarioController extends Controller
         return $this->respondWithToken(auth()->refresh());
     }
 
-    public function infoUsuario(Request $request) {
-        $usuario = Usuario::where('id', $request->id)->first();
+    public function infoUsuario($id) {
+        $usuario = Usuario::where('id', $id)->first();
         return json_encode($usuario);
     }
 

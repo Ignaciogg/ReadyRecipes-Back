@@ -28,10 +28,7 @@ class FavoritoController extends Controller
     // Eliminar la receta de favoritos
     public function removeFavoritos($id_receta, $id_usuario) {
 
-        $favorito=DB::table('favoritos')
-                            ->where('id_Receta', $id_receta)
-                            ->where('id_Usuario', $id_usuario)
-                            ->first();
+        $favorito=Favorito::where('id_receta', $id_receta)->where('id_usuario', $id_usuario)->first();
 
         if(!$favorito){ 
             return response()->json([
@@ -39,7 +36,7 @@ class FavoritoController extends Controller
             ], 404);
         }
 
-        DB::table('favoritos')->where('id', $favorito->id)->delete();
+        $favorito->delete();
 
         return response()->json([
             'message' => 'Favorito eliminado correctamente'

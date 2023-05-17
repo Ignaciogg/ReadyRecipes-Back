@@ -35,4 +35,14 @@ class Usuario extends Authenticatable implements JWTSubject
     {
         return $this->administrador == 1;
     }
+
+    public function comentarios()
+    {
+        return $this->hasMany(Comentario::class, 'id_Usuario');
+    }
+
+    public function favoritos()
+    {
+        return $this->hasMany(Favorito::class, 'id_Usuario');
+    }
 }

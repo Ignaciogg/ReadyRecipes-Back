@@ -12,4 +12,27 @@ class Receta extends Model
 
     protected $table = 'recetas';
 
+    public function ingredientes()
+    {
+        return $this->hasMany(Ingrediente::class, 'id_Receta');
+    }
+
+    public function comentarios()
+    {
+        return $this->hasMany(Comentario::class, 'id_Receta');
+    }
+
+    public function favoritos()
+    {
+        return $this->hasMany(Favorito::class, 'id_Receta');
+    }
+
+    public function calcularPrecio(){
+        $precio_total=0;
+        foreach($this->ingredientes as $ingrediente){
+            $precio_total += $ingrediente->alimento->precio;
+        }
+        return $precio_total;
+    }
+
 }

@@ -8,17 +8,16 @@ use App\Models\Alimento;
 class AlimentoController extends Controller
 {
     public function crear(Request $request) {
-        $content = $request->getContent();
-        $alimento_json = json_decode($content);
+        /*$content = $request->getContent();*/
+        /*$alimento_json = json_decode($content);*/
 
         $alimento = new Alimento();
-        $alimento->nombre = $alimento_json->nombre;
-        $alimento->nutriscore = $alimento_json->nutriscore;
+        $alimento->nombre = $request->nombre;
+        $alimento->nutriscore = $request->nutriscore;
         $alimento->save();
-        echo $alimento;
     }
-    public function getAll(Request $request) {
-        $alimentos = Alimento::select('id', 'nombre')->get();
-        echo $alimentos;
+    public function getAll() {
+        $alimentos = Alimento::all();
+        return json_encode($alimentos);
     }
 }

@@ -4,29 +4,32 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Comentario;
+use App\Models\Receta;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ComentariosController extends Controller
 {
-    public function comentariosUsuario(Request $request) {
-        $id = $request->id_usuario;
+    public function comentariosUsuario($id) {
         $comentarios_encontrados = Comentario::where('id_usuario', $id)->get();
         return json_encode($comentarios_encontrados);
     }
 
-    public function comentariosReceta(Request $request) { //le pasamos por request un objeto receta
-        $id_receta = $request->id_receta;
+    public function comentariosReceta($id) { //le pasamos por request un objeto receta
+        $receta = Receta::find($id);
 
-        $resultado = DB::table('comentarios')
+        $comentarios_encontrados = $receta->comentarios;
+
+        /*$resultado = DB::table('comentarios')
             ->join('recetas', 'recetas.id', '=', 'comentarios.id_Receta')
             ->join('usuarios', 'usuarios.id', '=', 'comentarios.id_Usuario')
             ->select('usuarios.nombre', 'usuarios.apellidos', 'comentarios.contenido')
             ->where('comentarios.id_Receta', $id_receta)
-            ->get();
+            ->get();*/
         
 
-        return json_encode($resultado);
+        return json_encode($comentarios_encontrados);
     }
 
     public function nuevoComentario(Request $request) {
