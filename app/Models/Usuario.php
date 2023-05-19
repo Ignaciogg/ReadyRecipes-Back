@@ -15,7 +15,7 @@ class Usuario extends Authenticatable implements JWTSubject
     protected $table = 'usuarios';
     protected $hidden = [
         'pass',
-        'id',
+        // 'id',
         'created_at',
         'updated_at',
         'deleted_at'
