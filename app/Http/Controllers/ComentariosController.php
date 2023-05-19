@@ -25,7 +25,7 @@ class ComentariosController extends Controller
         foreach($comentarios as $comentario) {
             $datos_usuario=$comentario->usuario()->select('email','nombre','apellidos')->get();
             $comentario->usuario=$datos_usuario;
-
+            $comentario->makeHidden('id_Usuario');
         }
 
         return json_encode($comentarios);
