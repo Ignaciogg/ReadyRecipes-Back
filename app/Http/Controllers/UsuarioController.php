@@ -83,7 +83,6 @@ class UsuarioController extends Controller
     }
 
     public function numeroUsuarios() {
-        $contador = 0;
         $modifs = collect();
         $users = Usuario::orderBy("created_at")->withTrashed()->get();
         foreach($users as $us) {

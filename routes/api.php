@@ -44,6 +44,7 @@ Route::post('recetasPorNutriscore', [RecetaController::class, 'recetasPorNutrisc
 Route::get('comentariosUsuario/{id}', [ComentariosController::class, 'comentariosUsuario']);
 Route::post('nuevoComentario', [ComentariosController::class, 'nuevoComentario']);
 Route::get('comentariosReceta/{id}', [ComentariosController::class, 'comentariosReceta']);
+Route::get('numeroComentarios', [ComentariosController::class, 'numeroComentarios']);
 
 //USUARIOS
 Route::post('login', [UsuarioController::class, 'login']); // hecho
@@ -51,7 +52,7 @@ Route::get('logout', [UsuarioController::class, 'logout']);
 Route::post('registro', [UsuarioController::class, 'registrar']); // hecho
 Route::get('infoUsuario/{id}', [UsuarioController::class, 'infoUsuario']);
 Route::post('eliminarUsuario', [UsuarioController::class, 'eliminarUsuario']);
-Route::post('numeroUsuarios', [UsuarioController::class, 'numeroUsuarios']); //hecho
+Route::get('numeroUsuarios', [UsuarioController::class, 'numeroUsuarios']); //hecho
 Route::post('me', [UsuarioController::class, 'me']); //hecho
 
 //FAVORITOS

@@ -19,17 +19,13 @@ class ComentariosController extends Controller
     public function comentariosReceta($id) { //le pasamos por request un objeto receta
         $receta = Receta::find($id);
 
-        $comentarios_encontrados = $receta->comentarios;
+        $comentarios = $receta->comentarios()->get()[0]->contenido;
 
-        /*$resultado = DB::table('comentarios')
-            ->join('recetas', 'recetas.id', '=', 'comentarios.id_Receta')
-            ->join('usuarios', 'usuarios.id', '=', 'comentarios.id_Usuario')
-            ->select('usuarios.nombre', 'usuarios.apellidos', 'comentarios.contenido')
-            ->where('comentarios.id_Receta', $id_receta)
-            ->get();*/
-        
+        $datos_usuario=$receta->comentarios()->get()[0]->usuario()->select('email','nombre','apellidos')->get()[0];
 
-        return json_encode($comentarios_encontrados);
+        $datos_usuario->comentario=$comentarios;
+
+        return json_encode($datos_usuario);
     }
 
     public function nuevoComentario(Request $request) {
@@ -40,8 +36,7 @@ class ComentariosController extends Controller
         $comentario->save();
     }
 
-    public function numeroComentarios(Request $request) {
-        $contador = 0;
+    public function numeroComentarios() {
         $modifs = collect();
         $coments = Comentario::orderBy("created_at")->withTrashed()->get();
         foreach($coments as $co) {
