@@ -19,13 +19,16 @@ class ComentariosController extends Controller
     public function comentariosReceta($id) { //le pasamos por request un objeto receta
         $receta = Receta::find($id);
 
-        $comentarios = $receta->comentarios()->get()[0]->contenido;
+        $comentarios = $receta->comentarios()->select('contenido','id_Usuario')
+                        ->get();
 
-        $datos_usuario=$receta->comentarios()->get()[0]->usuario()->select('email','nombre','apellidos')->get()[0];
+        foreach($comentarios as $comentario) {
+            $datos_usuario=$comentario->usuario()->select('email','nombre','apellidos')->get();
+            $comentario->usuario=$datos_usuario;
 
-        $datos_usuario->comentario=$comentarios;
+        }
 
-        return json_encode($datos_usuario);
+        return json_encode($comentarios);
     }
 
     public function nuevoComentario(Request $request) {
