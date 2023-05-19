@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class FavoritoController extends Controller
-{
+{ 
     // Añadir la receta a favoritos
     public function addFavoritos(Request $request) {
 
@@ -41,5 +41,11 @@ class FavoritoController extends Controller
         return response()->json([
             'message' => 'Favorito eliminado correctamente'
         ], 200);
+    }
+
+    public function esFavorito($id_receta, $id_usuario) {
+        
+        $favorito = Favorito::where('id_receta', $id_receta)->where('id_usuario', $id_usuario)->exists();
+        return $favorito ? "1" : "0";
     }
 }
