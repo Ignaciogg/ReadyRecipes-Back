@@ -21,7 +21,7 @@ class IngredienteController extends Controller
         $ingrediente->save();
     }
     public function ingredientes() {
-        $nombres_ingredientes =  Alimento::select('id','nombre','nutriscore')->get();
+        $nombres_ingredientes =  Alimento::select('id','nombre','nutriscore')->orderBy('nombre')->get();
         return json_encode($nombres_ingredientes);
     }
 }
