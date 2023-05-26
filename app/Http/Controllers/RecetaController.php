@@ -51,52 +51,45 @@ class RecetaController extends Controller
         }
     }
 
-    public function buscarReceta(Request $request)
-        {
+    public function buscarReceta(Request $request) {
+        $recetas=Receta::query();
+        if($request->categoria){
+            $recetas= $recetas->where('categoria', $request->categoria);
+        }
 
-            $recetas=Receta::query();
+        if($request->nutriscore){
+            $recetas=$recetas->where('nutriscore', '>=', $request->nutriscore);
+        }
 
-            if($request->categoria){
-                $recetas= $recetas->where('categoria', $request->categoria);
+        if($request->ingredientes){     
+            $recetas=$recetas->whereHas('ingredientes', function($query) use ($request){
+                $query->whereIn('id_alimento', $request->ingredientes);}, '=', count($request->ingredientes));
+        }
+
+        if($request->favorito){
+            $favorito=$request->favorito;
+            $user = Auth::user();
+            if($favorito==true){
+                $recetas = $recetas->whereHas('favoritos', fn($query) => $query->where('id_usuario', $user->id));
             }
+        }
 
-            if($request->nutriscore){
-                $recetas=$recetas->where('nutriscore', '>=', $request->nutriscore);
-            }
-
-            if($request->ingredientes){
-            
-                $recetas=$recetas->whereHas('ingredientes', function($query) use ($request){
-                    $query->whereIn('id_alimento', $request->ingredientes);}, '=', count($request->ingredientes));
-            }
-
-            if($request->favorito){
-                $favorito=$request->favorito;
-                if($favorito==true){
-                    $recetas = $recetas->whereHas('favoritos', fn($query) => $query->where('id_usuario', $request->id_usuario));
-                    }
-            }
-
-
-            if($request->precio){
-
-                foreach($recetas as $receta){
-                    $receta->precio=$receta->calcularPrecio();
-                    if($receta->precio > $request->precio){
-                        $recetas->except($receta->id);
-                    }
+        if($request->precio){
+            foreach($recetas as $receta){
+                $receta->precio=$receta->calcularPrecio();
+                if($receta->precio > $request->precio){
+                    $recetas->except($receta->id);
                 }
             }
-
-            if($recetas->count()==0){
-                return response()->json([
-                    'message' => 'No existe la receta'
-                ], 404);
-            }
-
-
-            return json_encode($recetas->get());
         }
+
+        if($recetas->count()==0){
+            return response()->json([
+                'message' => 'No existe la receta'
+            ], 404);
+        }
+        return json_encode($recetas->get());
+    }
 
     public function modificarReceta(Request $request) {
         $actual = Receta::find($request->id);
