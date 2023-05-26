@@ -53,6 +53,7 @@ Route::post('registro', [UsuarioController::class, 'registrar']); // hecho
 Route::get('infoUsuario/{id}', [UsuarioController::class, 'infoUsuario']);
 Route::post('eliminarUsuario', [UsuarioController::class, 'eliminarUsuario']);
 Route::get('numeroUsuarios', [UsuarioController::class, 'numeroUsuarios']); //hecho
+Route::get('refresh', [UsuarioController::class, 'refresh']); //hecho
 Route::post('me', [UsuarioController::class, 'me']); //hecho
 
 //FAVORITOS
