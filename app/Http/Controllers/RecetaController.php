@@ -56,7 +56,7 @@ class RecetaController extends Controller
 
             $recetas=Receta::query();
 
-            /*if($request->categoria){
+            if($request->categoria){
                 $recetas= $recetas->where('categoria', $request->categoria);
             }
 
@@ -75,9 +75,8 @@ class RecetaController extends Controller
                 if($favorito==true){
                     $recetas = $recetas->whereHas('favoritos', fn($query) => $query->where('id_usuario', $request->id_usuario));
                     }
-            }*/
+            }
 
-            //$recetas=$recetas->get();
 
             if($request->precio){
 
@@ -122,19 +121,17 @@ class RecetaController extends Controller
 
     public function recetasPorCategoria()
     {
-        $recetasPorCategoria = DB::table('recetas')
-            ->select('categoria', DB::raw('count(*) as total'))
-            ->groupBy('categoria')
-            ->get();
-        return response()->json($recetasPorCategoria);
+        $recetasPorCategoria = Receta::groupBy('categoria')
+        ->select('categoria', DB::raw('count(*) as total'));
+
+
+        return json_encode($recetasPorCategoria->get());
     }
 
     public function recetasPorNutriscore() {
-        $recetasPorPrecio = DB::table('recetas')
-        ->select(DB::raw('ROUND(nutriscore, 1) AS nutriscore_rounded'), DB::raw('COUNT(*) as total'))
-            ->groupBy('nutriscore')
-            ->having('total', '>', 2)
-            ->get();
-        return response()->json($recetasPorPrecio);
+        $recetasPorPrecio = Receta::groupBy('nutriscore')
+        ->having('total', '>', 2)
+        ->select(DB::raw('ROUND(nutriscore, 1) AS nutriscore_rounded'), DB::raw('COUNT(*) as total'));
+        return json_encode($recetasPorPrecio->get());
     }
 }
