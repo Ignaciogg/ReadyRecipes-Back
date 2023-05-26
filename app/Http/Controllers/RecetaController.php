@@ -53,69 +53,41 @@ class RecetaController extends Controller
 
     public function buscarReceta(Request $request)
         {
-            $query=Receta::query();
 
-            if($request->categoria){
-                $query= $query->where('recetas.categoria', $request->categoria);
+            $recetas=Receta::query();
+
+            /*if($request->categoria){
+                $recetas= $recetas->where('categoria', $request->categoria);
             }
 
             if($request->nutriscore){
-                $query=$query->where('recetas.nutriscore', '>=', $request->nutriscore);
+                $recetas=$recetas->where('nutriscore', '>=', $request->nutriscore);
             }
 
             if($request->ingredientes){
-                $ids_alimentos = $request->ingredientes;
-                $query= $query->select('recetas.id','recetas.titulo','recetas.categoria','recetas.nutriscore')
-                        ->join('ingredientes as i', 'recetas.id', '=', 'i.id_receta')
-                        ->whereIn('i.id_alimento', $ids_alimentos)
-                        ->groupBy('recetas.id','recetas.titulo','recetas.categoria','recetas.nutriscore')
-                        ->havingRaw('COUNT(DISTINCT i.id_alimento) = ?', [count($ids_alimentos)]);
+            
+                $recetas=$recetas->whereHas('ingredientes', function($query) use ($request){
+                    $query->whereIn('id_alimento', $request->ingredientes);}, '=', count($request->ingredientes));
             }
 
             if($request->favorito){
                 $favorito=$request->favorito;
                 if($favorito==true){
-                    $query=$query->join('favoritos', 'favoritos.id_receta', '=', 'recetas.id')
-                            ->join('usuarios', 'favoritos.id_usuario', '=', 'usuarios.id')
-                            ->where('favoritos.id_usuario', $request->id_usuario)
-                            ->select('recetas.id','recetas.titulo','recetas.categoria','recetas.nutriscore');
+                    $recetas = $recetas->whereHas('favoritos', fn($query) => $query->where('id_usuario', $request->id_usuario));
                     }
+            }*/
 
-            }
-
-
-            $recetas=$query->get();
-
+            //$recetas=$recetas->get();
 
             if($request->precio){
+
                 foreach($recetas as $receta){
-                    if ($receta->precio > $request->precio){
-                        unset($recetas[$receta->id]);
+                    $receta->precio=$receta->calcularPrecio();
+                    if($receta->precio > $request->precio){
+                        $recetas->except($receta->id);
                     }
                 }
-
-                /*$id_recetas=Receta::pluck('id');
-
-                for ($i=0; $i < count($id_recetas); $i++) {
-                    $precio_total = DB::table('recetas')->join('ingredientes as i', 'recetas.id', '=', 'i.id_Receta')
-                    ->join('alimentos as a', 'i.id_Alimento', '=', 'a.id')
-                    ->join('precios as p', 'a.id', '=', 'p.id_Alimento')
-                    ->where('recetas.id', $id_recetas[$i])
-                    ->sum('p.precio');
-
-
-                    if($precio_total>$request->precio){
-                        unset($id_recetas[$i]);
-                    }
-                }
-
-                $query=$query->whereIn('recetas.id', $id_recetas)
-                        ->select('recetas.id','recetas.titulo','recetas.categoria','recetas.nutriscore');
-                        //->take(10);*/
-
             }
-
-
 
             if($recetas->count()==0){
                 return response()->json([
@@ -124,7 +96,7 @@ class RecetaController extends Controller
             }
 
 
-            return json_encode($recetas);
+            return json_encode($recetas->get());
         }
 
     public function modificarReceta(Request $request) {
