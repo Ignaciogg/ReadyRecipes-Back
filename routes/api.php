@@ -9,6 +9,7 @@ use App\Http\Controllers\AlimentoController;
 use App\Http\Controllers\IngredienteController;
 use App\Http\Controllers\PrecioController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\OpcionesAdminController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -72,6 +73,13 @@ Route::get('alimentos', [AlimentoController::class, 'getAll']);
 //PRECIOS
 Route::post('nuevoPrecio', [PrecioController::class, 'crear']); // hecho
 
+//ADMIN
+Route::get('getColores', [OpcionesAdminController::class, 'getColores']); //hecho
+Route::post('setPrincipal', [OpcionesAdminController::class, 'setPrincipal']); //hecho
+Route::post('setClaro', [OpcionesAdminController::class, 'setClaro']); //hecho
+Route::post('setSecundario', [OpcionesAdminController::class, 'setSecundario']); //hecho
+
+
 //Cifrar passwords
 Route::post('actualizarPasswords', [UsuarioController::class, 'actualizarPasswords']); //hecho
 
@@ -89,3 +97,4 @@ Route::middleware('auth')->get('/user', function (Request $request) {
 Route::middleware('admin')->get('/admin', function (Request $request) {
     return "El usuario es admin";
 });
+
