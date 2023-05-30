@@ -70,9 +70,16 @@ class RecetaController extends Controller
 
         if($request->favorito){
             $favorito=$request->favorito;
-            $user = Auth::user();
-            if($favorito==true){
-                $recetas = $recetas->whereHas('favoritos', fn($query) => $query->where('id_usuario', $user->id));
+            //si el usuario no está logueado, no se puede filtrar por favoritos
+            if(!Auth::check()){
+                return response()->json([
+                    'message' => 'No se puede filtrar por favoritos si no está logueado'
+                ], 401);
+            }else{
+                $user = Auth::user();
+                if($favorito==true){
+                    $recetas = $recetas->whereHas('favoritos', fn($query) => $query->where('id_usuario', $user->id));
+                }
             }
         }
 
