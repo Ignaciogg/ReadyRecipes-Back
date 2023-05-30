@@ -59,7 +59,7 @@ Route::get('refresh', [UsuarioController::class, 'refresh']); //hecho
 Route::post('me', [UsuarioController::class, 'me']); //hecho
 
 //FAVORITOS
-Route::post('addFavoritos', [FavoritoController::class, 'addFavoritos']); // hecho
+Route::get('addFavoritos/{id_receta}', [FavoritoController::class, 'addFavoritos']); // hecho
 Route::delete('removeFavoritos/{id_receta}',[FavoritoController::class, 'removeFavoritos']); // hecho
 Route::get('esFavorito/{id_receta}', [FavoritoController::class, 'esFavorito']); // hecho
 
