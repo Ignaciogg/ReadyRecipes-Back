@@ -11,10 +11,7 @@ use Illuminate\Support\Facades\DB;
 
 class ComentariosController extends Controller
 {
-    public function comentariosUsuario($id) {
-        $comentarios_encontrados = Comentario::where('id_usuario', $id)->get();
-        return json_encode($comentarios_encontrados);
-    }
+
 
     public function comentariosReceta($id) { //le pasamos por request un objeto receta
         $receta = Receta::find($id);

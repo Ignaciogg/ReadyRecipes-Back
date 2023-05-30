@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Favorito;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class FavoritoController extends Controller
@@ -43,9 +44,9 @@ class FavoritoController extends Controller
         ], 200);
     }
 
-    public function esFavorito($id_receta, $id_usuario) {
-        
-        $favorito = Favorito::where('id_receta', $id_receta)->where('id_usuario', $id_usuario)->exists();
+    public function esFavorito($id_receta) {
+        $user = Auth::user();
+        $favorito = Favorito::where('id_receta', $id_receta)->where('id_usuario', $user->id)->exists();
         return $favorito ? "1" : "0";
     }
 }

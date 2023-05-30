@@ -24,4 +24,6 @@ class IngredienteController extends Controller
         $nombres_ingredientes =  Alimento::select('id','nombre','nutriscore')->orderBy('nombre')->get();
         return json_encode($nombres_ingredientes);
     }
+
+    
 }

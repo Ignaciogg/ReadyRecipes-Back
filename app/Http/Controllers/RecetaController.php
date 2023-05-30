@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Receta;
 use Illuminate\Support\Facades\DB;
+use \Illuminate\Support\Facades\Auth;
 
 class RecetaController extends Controller
 {
@@ -53,6 +54,7 @@ class RecetaController extends Controller
 
     public function buscarReceta(Request $request) {
         $recetas=Receta::query();
+
         if($request->categoria){
             $recetas= $recetas->where('categoria', $request->categoria);
         }
@@ -75,12 +77,20 @@ class RecetaController extends Controller
         }
 
         if($request->precio){
-            foreach($recetas as $receta){
-                $receta->precio=$receta->calcularPrecio();
-                if($receta->precio > $request->precio){
-                    $recetas->except($receta->id);
+            $precioMaximo = $request->precio;
+            
+
+            $array_precio = [];
+            foreach ($recetas as $receta) {
+                $precio = $receta->calcularPrecio();
+                array_push($array_precio, $precio);
+                
+                if($precio > $precioMaximo){
+                    $recetas->forget($receta);
                 }
+            
             }
+            
         }
 
         if($recetas->count()==0){
@@ -88,6 +98,7 @@ class RecetaController extends Controller
                 'message' => 'No existe la receta'
             ], 404);
         }
+
         return json_encode($recetas->get());
     }
 

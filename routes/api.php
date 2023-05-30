@@ -60,7 +60,7 @@ Route::post('me', [UsuarioController::class, 'me']); //hecho
 //FAVORITOS
 Route::post('addFavoritos', [FavoritoController::class, 'addFavoritos']); // hecho
 Route::delete('removeFavoritos/{id_receta}/{id_usuario}',[FavoritoController::class, 'removeFavoritos']); // hecho
-Route::get('esFavorito/{id_receta}/{id_usuario}', [FavoritoController::class, 'esFavorito']); // hecho
+Route::get('esFavorito/{id_receta}', [FavoritoController::class, 'esFavorito']); // hecho
 
 //INGREDIENTES
 Route::get('ingredientes', [IngredienteController::class, 'ingredientes']); // hecho
