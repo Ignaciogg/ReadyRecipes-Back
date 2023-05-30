@@ -70,7 +70,6 @@ class RecetaController extends Controller
 
         if($request->favorito){
             $favorito=$request->favorito;
-            //si el usuario no está logueado, no se puede filtrar por favoritos
             if(!Auth::check()){
                 return response()->json([
                     'message' => 'No se puede filtrar por favoritos si no está logueado'
@@ -85,19 +84,15 @@ class RecetaController extends Controller
 
         if($request->precio){
             $precioMaximo = $request->precio;
-            
-
-            $array_precio = [];
+            $idRecetas = [];
+            $recetas = $recetas->get();
             foreach ($recetas as $receta) {
-                $precio = $receta->calcularPrecio();
-                array_push($array_precio, $precio);
-                
-                if($precio > $precioMaximo){
-                    $recetas->forget($receta);
+                $precio = $receta->calcularPrecio();             
+                if($precio <= $precioMaximo){
+                    array_push($idRecetas, $receta->id);
                 }
-            
             }
-            
+            $recetas = Receta::whereIn('id', $idRecetas);
         }
 
         if($recetas->count()==0){
