@@ -38,7 +38,6 @@ class RecetaController extends Controller
 
         if ($receta) {
             $receta->ingredientes = $ingredientes;
-            $receta->precio = $receta->calcularPrecio();
             $alimentos = [];
             foreach($ingredientes as $ingrediente){
                 array_push($alimentos, $ingrediente->alimento->nombre);
@@ -52,6 +51,15 @@ class RecetaController extends Controller
         }
     }
 
+    public function actualizarPrecios(){
+        $recetas = Receta::all();
+        foreach($recetas as $receta){
+            $precio = $receta->calcularPrecio();
+            $receta->precio = $precio;
+            $receta->save();
+        }
+    }
+    
     public function buscarReceta(Request $request) {
         $recetas=Receta::query();
 
@@ -83,18 +91,7 @@ class RecetaController extends Controller
         }
 
         if($request->precio){
-            if ($request->precio > 0) {
-                $precioMaximo = $request->precio;
-                $idRecetas = [];
-                $recetas = $recetas->get();
-                foreach ($recetas as $receta) {
-                    $precio = $receta->calcularPrecio();             
-                    if($precio <= $precioMaximo){
-                        array_push($idRecetas, $receta->id);
-                    }
-                }
-                $recetas = Receta::whereIn('id', $idRecetas);
-            }
+            $recetas = $recetas->where('precio', '<=', $request->precio);
         }
 
         if($recetas->count()==0){

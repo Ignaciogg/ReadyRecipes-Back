@@ -40,6 +40,7 @@ Route::get('recetas/getAll', [RecetaController::class , 'getAll']);
 Route::post('modificarReceta', [RecetaController::class, 'modificarReceta']);
 Route::post('recetasPorCategoria', [RecetaController::class, 'recetasPorCategoria']);
 Route::post('recetasPorNutriscore', [RecetaController::class, 'recetasPorNutriscore']);
+Route::get('actualizarPrecios', [RecetaController::class, 'actualizarPrecios']); // hecho
  
 //COMENTARIOS
 Route::get('comentariosUsuario/{id}', [ComentariosController::class, 'comentariosUsuario']);
@@ -72,6 +73,7 @@ Route::get('alimentos', [AlimentoController::class, 'getAll']);
 
 //PRECIOS
 Route::post('nuevoPrecio', [PrecioController::class, 'crear']); // hecho
+
 
 //ADMIN
 Route::get('getColores', [OpcionesAdminController::class, 'getColores']); //hecho

@@ -25,6 +25,7 @@ return new class extends Migration
             $table->integer('comentarios_negativos');
             $table->double('sentimiento');
             $table->double('nutriscore');
+            $table->double('precio');
             $table->timestamps();
             $table->softDeletes();
         });
