@@ -41,7 +41,7 @@ Route::post('modificarReceta', [RecetaController::class, 'modificarReceta']);
 Route::post('recetasPorCategoria', [RecetaController::class, 'recetasPorCategoria']);
 Route::post('recetasPorNutriscore', [RecetaController::class, 'recetasPorNutriscore']);
 Route::get('actualizarPrecios', [RecetaController::class, 'actualizarPrecios']); // hecho
- 
+
 //COMENTARIOS
 Route::get('comentariosUsuario/{id}', [ComentariosController::class, 'comentariosUsuario']);
 Route::post('nuevoComentario', [ComentariosController::class, 'nuevoComentario']);
@@ -76,10 +76,10 @@ Route::post('nuevoPrecio', [PrecioController::class, 'crear']); // hecho
 
 
 //ADMIN
-Route::get('getColores', [OpcionesAdminController::class, 'getColores']); //hecho
-Route::post('setPrincipal', [OpcionesAdminController::class, 'setPrincipal']); //hecho
-Route::post('setClaro', [OpcionesAdminController::class, 'setClaro']); //hecho
-Route::post('setSecundario', [OpcionesAdminController::class, 'setSecundario']); //hecho
+Route::middleware('admin')->get('getColores', [OpcionesAdminController::class, 'getColores']); //hecho
+Route::middleware('admin')->post('setPrincipal', [OpcionesAdminController::class, 'setPrincipal']); //hecho
+Route::middleware('admin')->post('setClaro', [OpcionesAdminController::class, 'setClaro']); //hecho
+Route::middleware('admin')->post('setSecundario', [OpcionesAdminController::class, 'setSecundario']); //hecho
 
 
 //Cifrar passwords
