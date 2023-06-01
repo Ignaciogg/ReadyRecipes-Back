@@ -31,7 +31,7 @@ class ComentariosController extends Controller
     public function nuevoComentario(Request $request) {
         $comentario = new Comentario();
         $comentario->id_Receta = $request->id_receta;
-        $comentario->id_Usuario = $request->id_usuario;
+        $comentario->id_Usuario = auth()->user()->id;
         $comentario->contenido = $request->contenido;
         $comentario->save();
     }
